@@ -1,0 +1,14 @@
+services:
+  minio:
+    image: minio/minio:latest
+    container_name: minio
+    ports:
+      - "9000:9000"  #SERVER PORT
+      - "9001:9001"  #CONSOLE PORT
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
+    volumes:
+      - ./minio-data:/data  #DATA VOLUME
+    command: server /data --console-address ":9001"  #COMMAND TO START THE SERVER
+    restart: unless-stopped  #RESTART POLICY

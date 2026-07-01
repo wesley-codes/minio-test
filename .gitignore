@@ -1,0 +1,7 @@
+venv/
+.env
+minio-data/
+.minio.sys/
+__pycache__/        # Python cache files        
+.git
+minio-ata/                                                                                                                                                                                                                            
