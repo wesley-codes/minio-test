@@ -1,0 +1,30 @@
+apiVersion: batch/v1
+kind: Job 
+metadata:
+  name: minio-uploader
+  namespace: minio
+spec:
+  backoffLimit: 3
+  template:
+    spec:
+      restartPolicy: Never
+      containers: 
+        - name: uploader
+          image: my-uploader:latest
+          imagePullPolicy: Never
+          env:
+            - name: MINIO_ENDPOINT
+              value: "minio-service.minio.svc.cluster.local:9000"   
+            - name: MINIO_SECURE
+              value: "False"
+            - name: MINIO_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: minio-secret      
+                  key: accessKey
+            - name: MINIO_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: minio-secret
+                  key: secretKey
+          
