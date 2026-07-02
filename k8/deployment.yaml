@@ -32,6 +32,13 @@ spec:
                 secretKeyRef:
                   name: minio-secret
                   key: secretKey
-          ports:               # <-- sibling of env, at container level
+          ports:               
             - containerPort: 9000
             - containerPort: 9001
+          volumeMounts:
+            - mountPath: /data
+              name: minio-data
+      volumes:
+        - name: minio-data
+          persistentVolumeClaim:
+            claimName: minio-pvc
